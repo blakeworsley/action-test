@@ -19,12 +19,13 @@ const run = async () => {
     const story = await result.json();
 
     console.log(">>>>>>>>>>> STORY <<<<<<<<<<<<", story);
+    console.log(">>>>>>>>>>> URL <<<<<<<<<<<<", story.app_url);
+    console.log(">>>>>>>>>>> TITLE <<<<<<<<<<<<", story.name);
 
-    core.setOutput("story", story);
     core.setOutput("storyUrl", story.app_url);
     core.setOutput("storyTitle", story.name);
 
-    const payload = JSON.stringify(github.context.payload, undefined, 2);
+    // const payload = JSON.stringify(github.context.payload, undefined, 2);
   } catch (error) {
     core.setFailed(error.message);
   }
