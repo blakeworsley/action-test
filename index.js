@@ -1,4 +1,5 @@
 const core = require("@actions/core");
+const github = require("@actions/github");
 const fetch = require("node-fetch");
 
 const run = async () => {
@@ -17,9 +18,9 @@ const run = async () => {
     console.log(">>>>>>>>>>> TITLE <<<<<<<<<<<<", story.name);
     console.log(">>>>>>>>>>> DESCRIPTION <<<<<<<<<<<<", story.description);
 
-    core.setOutput("url", story?.app_url);
-    core.setOutput("title", story?.name);
-    core.setOutput("description", story?.description);
+    core.setOutput("url", story.app_url);
+    core.setOutput("title", story.name);
+    core.setOutput("description", story.description);
   } catch (error) {
     core.setFailed(error.message);
   }
