@@ -64,7 +64,7 @@ const run = async () => {
       requestOptions
     );
 
-    const story = JSON.stringify(result);
+    const story = await result.json();
 
     console.log(">>>>>>>>>>> STORY <<<<<<<<<<<<", story);
 
