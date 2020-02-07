@@ -10,10 +10,12 @@ inputs:
     required: true
     default: ""
 outputs:
-  storyUrl: # url that redirects to the clubhouse ticket
+  url: # url that redirects to the clubhouse ticket
     description: "Url of the clubhouse story associated with the storyId"
-  storyTitle: # url that redirects to the clubhouse ticket
+  title: # url that redirects to the clubhouse ticket
     description: "Story Title of the clubhouse story associated with the storyId"
+  description: # description that redirects to the clubhouse ticket
+    description: "Description of the clubhouse story associated with the storyId"
 runs:
   using: "node12"
   main: "dist/index.js"
