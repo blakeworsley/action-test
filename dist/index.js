@@ -59,13 +59,16 @@ const run = async () => {
       redirect: "follow"
     };
 
-    const story = await fetch(
+    const result = await fetch(
       `https://api.clubhouse.io/api/v3/stories/${storyId}?token=${token}`,
       requestOptions
     );
 
+    const story = JSON.stringify(result);
+
     console.log(">>>>>>>>>>> STORY <<<<<<<<<<<<", story);
 
+    core.setOutput("story", story);
     core.setOutput("storyUrl", story.app_url);
     core.setOutput("storyTitle", story.name);
 
