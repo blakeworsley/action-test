@@ -50,14 +50,24 @@ const core = __webpack_require__(258);
 const github = __webpack_require__(11);
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput("who-to-greet");
-  console.log(`Hello ${nameToGreet}!`);
-  const time = new Date().toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
+  const storyId = core.getInput("storyId");
+  const token = core.getInput("CH_TOKEN");
+  var requestOptions = {
+    method: "GET",
+    redirect: "follow"
+  };
+
+  const story = fetch(
+    `https://api.clubhouse.io/api/v3/stories/${storyId}?token=${token}`,
+    requestOptions
+  );
+
+  console.log(">>>>>>>>>>> STORY <<<<<<<<<<<<", story);
+
+  core.setOutput("storyUrl", story.app_url);
+  core.setOutput("storyTitle", story.name);
+
   const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
 }

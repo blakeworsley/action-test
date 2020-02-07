@@ -1,13 +1,19 @@
-name: "Hello World"
-description: "Greet someone and record the time"
+name: "Get Clubhouse Story Info"
+description: "Get information from the clubhouse story"
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
+  storyId: # id of the story in clubhouse
+    description: "Unique identifier for clubhouse story"
     required: true
-    default: "World"
+    default: ""
+  CH_TOKEN: # token for clubhouse api access
+    description: "Clubhouse token"
+    required: true
+    default: ""
 outputs:
-  time: # id of output
-    description: "The time we greeted you"
+  storyUrl: # url that redirects to the clubhouse ticket
+    description: "Url of the clubhouse story associated with the storyId"
+  storyTitle: # url that redirects to the clubhouse ticket
+    description: "Story Title of the clubhouse story associated with the storyId"
 runs:
   using: "node12"
   main: "dist/index.js"
