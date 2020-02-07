@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 const run = async () => {
   try {
     const storyId = core.getInput("storyId");
-    const token = core.getInput("CH_TOKEN");
+    const token = core.getInput("token");
     var requestOptions = {
       method: "GET",
       redirect: "follow"

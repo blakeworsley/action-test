@@ -5,7 +5,7 @@ inputs:
     description: "Unique identifier for clubhouse story"
     required: true
     default: ""
-  CH_TOKEN: # token for clubhouse api access
+  token: # token for clubhouse api access
     description: "Clubhouse token"
     required: true
     default: ""
