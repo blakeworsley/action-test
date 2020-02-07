@@ -48,6 +48,7 @@ module.exports =
 
 const core = __webpack_require__(258);
 const github = __webpack_require__(11);
+const fetch = __webpack_require__(377);
 
 try {
   const storyId = core.getInput("storyId");
