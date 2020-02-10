@@ -1,21 +1,26 @@
 name: "Get Clubhouse Story Info"
 description: "Get information from the clubhouse story"
 inputs:
-  storyId: # id of the story in clubhouse
-    description: "Unique identifier for clubhouse story"
+  descriptionHeader:
+    description: "Specific title to search for in the body of the existing pull request. This text will be replaced with the description of the clubhouse story."
+    required: true
+    default: "### What does this pull request do?"
+  urlHeader:
+    description: "Specific url header to search for in the body of the existing pull request. This text will be replaced with the url and title of the clubhouse story."
+    required: true
+    default: "### What is the relevant story?"
+  delimiter:
+    description: "Delimeter before and after both the description and the url that the body will be split on."
+    required: true
+    default: "___"
+  GITHUB_TOKEN: # token for github api access
+    description: "Github token"
     required: true
     default: ""
-  token: # token for clubhouse api access
+  CLUBHOUSE_TOKEN: # token for clubhouse api access
     description: "Clubhouse token"
     required: true
     default: ""
-outputs:
-  url: # url that redirects to the clubhouse ticket
-    description: "Url of the clubhouse story associated with the storyId"
-  title: # url that redirects to the clubhouse ticket
-    description: "Story Title of the clubhouse story associated with the storyId"
-  description: # description that redirects to the clubhouse ticket
-    description: "Description of the clubhouse story associated with the storyId"
 runs:
   using: "node12"
   main: "dist/index.js"
