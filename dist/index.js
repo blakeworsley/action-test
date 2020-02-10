@@ -51,14 +51,14 @@ const github = __webpack_require__(11);
 const fetch = __webpack_require__(377);
 
 const getStoryIdFromBranch = ref => {
-  return (
+  const id =
     ref &&
     ref.includes("/ch") &&
     ref
       .split("/")
       .find(f => f.includes("ch") && parseInt(f.split("ch")[1]))
-      .split("ch")[0]
-  );
+      .split("ch")[1];
+  return id ? id : null;
 };
 
 const getClubhouseStory = (storyId, token) => {
@@ -95,15 +95,16 @@ const sanitizeBody = (body, url, title, description) => {
 
 const updatePR = async (url, title, description) => {
   const github_token = core.getInput("GITHUB_TOKEN", { required: true });
+  // Generate the request
   const request = {
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
     pull_number: github.context.payload.pull_request.number
   };
-
   const body = github.context.payload.pull_request.body;
-
   request.body = sanitizeBody(body, url, title, description);
+
+  // Update the PR
   const client = new github.GitHub(github_token);
   const response = await client.pulls.update(request);
   core.info(`response: ${response.status}`);
@@ -113,25 +114,13 @@ const updatePR = async (url, title, description) => {
 const run = async () => {
   try {
     const clubhouse_token = core.getInput("CLUBHOUSE_TOKEN");
-    console.log(
-      "github.context.payload.pull_request.head.ref",
-      github.context.payload.pull_request.head.ref
-    );
-    console.log(
-      "github.context.payload.pull_request",
-      github.context.payload.pull_request
-    );
     const storyId = await getStoryIdFromBranch(
       github.context.payload.pull_request.head.ref
     );
-    console.log("storyId", storyId);
-    const story = await getClubhouseStory(storyId, clubhouse_token);
-    console.log("story", story);
-    core.setOutput("clubhouseToken", clubhouse_token);
-    core.setOutput("storyId", storyId);
-    core.setOutput("url", story.app_url);
-    core.setOutput("title", story.name);
-    core.setOutput("description", story.description);
+    const story = storyId
+      ? await getClubhouseStory(storyId, clubhouse_token)
+      : null;
+
     if (story) {
       await updatePR(story.app_url, story.name, story.description);
     } else {
