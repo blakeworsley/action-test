@@ -115,12 +115,8 @@ const updatePR = async (url, title, description) => {
 const run = async () => {
   try {
     const clubhouse_token = core.getInput("CLUBHOUSE_TOKEN");
-    console.log("clubhouse_token", clubhouse_token);
-    console.log("github", github);
-    console.log("github.context", github.context);
     console.log("github.context.payload", github.context.payload);
-    console.log("github.context.payload.ref", github.context.payload.ref);
-    const storyId = await getStoryIdFromBranch(github.context.payload.ref);
+    const storyId = await getStoryIdFromBranch(github.context.payload.head.ref);
     console.log("storyId", storyId);
     const story = await getClubhouseStory(storyId, clubhouse_token);
     console.log("story", story);
