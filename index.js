@@ -23,11 +23,9 @@ const getClubhouseStory = (storyId, token) => {
 };
 
 const sanitizeBody = (body, url, title, description) => {
-  // const descriptionHeader = "### What does this pull request do?";
   const descriptionHeader = core.getInput("descriptionHeader");
   const descriptionBody = description;
 
-  // const urlHeader = "### What is the relevant story?";
   const urlHeader = core.getInput("urlHeader");
   const urlBody = title && url && `[${title}](${url})`;
 
@@ -67,7 +65,14 @@ const updatePR = async (url, title, description) => {
 const run = async () => {
   try {
     const clubhouse_token = core.getInput("CLUBHOUSE_TOKEN");
-    console.log("github.context.payload", github.context.payload);
+    console.log(
+      "github.context.payload.pull_request.head.ref",
+      github.context.payload.pull_request.head.ref
+    );
+    console.log(
+      "github.context.payload.pull_request",
+      github.context.payload.pull_request
+    );
     const storyId = await getStoryIdFromBranch(
       github.context.payload.pull_request.head.ref
     );
