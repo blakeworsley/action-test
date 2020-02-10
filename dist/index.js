@@ -61,12 +61,13 @@ const getStoryIdFromBranch = ref => {
   );
 };
 
-const getClubhouseStory = async (storyId, token) => {
-  const result = await fetch(
+const getClubhouseStory = (storyId, token) => {
+  return fetch(
     `https://api.clubhouse.io/api/v3/stories/${storyId}?token=${token}`,
     { method: "GET", redirect: "follow" }
-  );
-  return result.json();
+  )
+    .then(result => result.json())
+    .catch(error => error);
 };
 
 const sanitizeBody = (body, url, title, description) => {
@@ -114,8 +115,12 @@ const updatePR = async (url, title, description) => {
 const run = async () => {
   try {
     const clubhouse_token = core.getInput("CLUBHOUSE_TOKEN");
+    console.log("clubhouse_token", clubhouse_token);
+    console.log("github.context.payload.ref", github.context.payload.ref);
     const storyId = await getStoryIdFromBranch(github.context.payload.ref);
+    console.log("storyId", storyId);
     const story = await getClubhouseStory(storyId, clubhouse_token);
+    console.log("story", story);
     core.setOutput("clubhouseToken", clubhouse_token);
     core.setOutput("storyId", storyId);
     core.setOutput("url", story.app_url);
