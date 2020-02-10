@@ -21,6 +21,17 @@ inputs:
     description: "Clubhouse token"
     required: true
     default: ""
+outputs:
+  clubhouseToken:
+    description: "output for testing"
+  storyId:
+    description: "output for testing"
+  url:
+    description: "output for testing"
+  title:
+    description: "output for testing"
+  description:
+    description: "output for testing"
 runs:
   using: "node12"
   main: "dist/index.js"
